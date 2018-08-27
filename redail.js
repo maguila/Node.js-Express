@@ -11,6 +11,18 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/redail');
 
 const Propiedades = mongoose.model('Propiedades', { tipo: String, direccion: String });
+const ValoresGenerales = mongoose.model('valores_generales', {  });
+
+
+app.get("/valores/:codigo", function (req, res) {
+    console.log("hola redail rest ... get valores_generales, codigo="+ req.params.codigo );
+    res.setHeader("Content-Type", "application/json");
+    ValoresGenerales.findOne({codigo : req.params.codigo}, function (err, doc) {
+        //console.log("find ..." + doc[1].name.toUpperCase());
+        res.send(doc);
+    });
+});
+
 
 
 app.get("/all", function (req, res) {
