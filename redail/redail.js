@@ -12,7 +12,7 @@ app.use(bodyParser.json()); // parse application/json
 mongoose.connect('mongodb://localhost/redail');
 
 //Schemas y modelos
-var propiedadSchema = new mongoose.Schema({ tipo: String }, { strict: false });
+var propiedadSchema = new mongoose.Schema({ tipo: String }, { strict: false, versionKey: false });
 const Propiedades = mongoose.model('propiedades', propiedadSchema);
 const ValoresGenerales = mongoose.model('valores_generales', { });
 
@@ -21,7 +21,7 @@ app.get("/valores/:codigo", function (req, res) {
     var cod = req.params.codigo;
     console.log("hola redail rest ... get valores_generales, codigo="+ req.params.codigo );
     res.setHeader("Content-Type", "application/json");
-    ValoresGenerales.find({codigo : cod.toUpperCase()}, function (err, doc) {
+    ValoresGenerales.findOne({codigo : cod.toUpperCase()}, function (err, doc) {
         //console.log("find ..." + doc[1].name.toUpperCase());
         res.send(doc);
     });
