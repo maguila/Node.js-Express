@@ -13,7 +13,9 @@ mongoose.connect('mongodb://localhost/redail');
 
 //Schemas y modelos
 var propiedadSchema = new mongoose.Schema({ tipo: String }, { strict: false, versionKey: false });
+var regiones = new mongoose.Schema({ region: String, comunas: Array  }, { strict: false, versionKey: false });
 const Propiedades = mongoose.model('propiedades', propiedadSchema);
+const Regiones = mongoose.model('regiones', regiones);
 const ValoresGenerales = mongoose.model('valores_generales', { });
 
 
@@ -78,6 +80,14 @@ app.post("/update/propiedad", function (req, res) {
     }
 
 
+});
+
+app.get("/regiones", function (req, res) {    
+    res.setHeader("Content-Type", "application/json");
+    Regiones.find(function (err, doc) {
+        //console.log("find ..." + doc[1].name.toUpperCase());
+        res.send(doc);
+    }).sort('orden');
 });
 
 
